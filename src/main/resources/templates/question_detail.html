@@ -1,4 +1,4 @@
-
+<link rel="stylesheet" type="text/css" th:href="@{/style.css}">
 <h1 th:text="${question.subject}"></h1>
 <div th:text="${question.content}"></div>
 
@@ -9,7 +9,10 @@
     </ul>
 </div>
 
-<form th:action="@{|/answer/create/${question.id}|}" method="post">
-    <textarea name="content" id="content" rows="15"></textarea>
-    <input type="submit" value="답변등록">
+<form th:action="@{|/answer/create/${question.id}|}" th:object="${answerForm}" method="post" class="my-3">
+    <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
+        <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+    </div>
+    <textarea th:field="*{content}" rows="10" class="form-control"></textarea>
+    <input type="submit" value="답변등록" class="btn btn-primary my-2">
 </form>
